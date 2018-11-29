@@ -12,22 +12,26 @@ environments.default = 'staging';
 
 environments.staging = {
     'http_port': 3000,
-    'https_port': 4000,
-    'env_name': 'staging',
-    'key_path': './https/key.pem',
-    'cert_path': './https/cert.pem'
+    'https': {
+        'port': 4000,
+        'key_path': '../https/key.pem',
+        'cert_path': '../https/cert.pem'
+    },
+    'env_name': 'staging'
 }
 
 environments.production = {
     'http_port': 5000,
-    'https_port': 6000,
+    'https': {
+        'port': 6000,
+        'key_path': '../https/key.pem',
+        'cert_path': '../https/cert.pem'
+    },
     'env_name': 'production',
-    'key_path': './https/key.pem',
-    'cert_path': './https/cert.pem'
 }
 
-//Selected environment
-var node_env = process.env.NODE_ENV;
+//Selected environment, allowing for capitalization (Just a small Quality of Life change)
+var node_env = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : environments.default;
 
 //If the environment is a string and is contained in the environments object, return it.
 //Otherwise, use the default environment
